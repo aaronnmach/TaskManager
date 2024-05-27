@@ -8,7 +8,10 @@
 #include <ctime>
 #include <algorithm>
 #include <pthread.h>
+<<<<<<< HEAD
 #include <cstdint>
+=======
+>>>>>>> 016a860 (added header files and created some cpp)
 
 using namespace std;
 
@@ -17,6 +20,7 @@ TaskList::TaskList()
 }
 TaskList::~TaskList()
 {
+<<<<<<< HEAD
     for (unsigned int i = 0; i < allTasks.size(); i++)
     {
         delete allTasks[i];
@@ -168,4 +172,6 @@ void *TaskList::_updateDdlHelper(void *arg)
 
         sleep(ONE_HOUR);
     }
+=======
+>>>>>>> 016a860 (added header files and created some cpp)
 }
