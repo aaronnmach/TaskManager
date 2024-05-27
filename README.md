@@ -1,7 +1,9 @@
 # TaskPro
 
 
-To run the file, use command: git clone --recursive https://github.com/amach8/TaskPro.git
+To run the file, use command: 
+
+     git clone --recursive https://github.com/amach8/TaskPro.git
 
 Once cloned, use commands in this order:
 
