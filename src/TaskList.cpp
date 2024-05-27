@@ -28,59 +28,57 @@ vector<MainTask *> TaskList::getAllTasks()
 }
 int TaskList::sort(int userChoice)
 {
+
     if (allTasks.size() == 0)
     {
+
         return 0;
     }
+    if (userChoice == 1)
+    { // sort by priority
 
-    if (userChoice == 1) // sort by priority
-    {
-        for (unsigned int i = 0; i < allTasks.size() - 1; i++)
+        for (int i = 0; i < static_cast<int>(allTasks.size()) - 1; i++)
         {
+            // cout << "i = " << i << endl;
             allTasks[i]->sort();
+            // cout << "done sort for subtasks i = " << i << endl;
 
-            unsigned int minIndex = i;
-            for (unsigned int j = i + 1; j < allTasks.size(); j++)
+            for (int j = 0; j < static_cast<int>(allTasks.size()) - i - 1; j++)
             {
-                if (allTasks[j]->getPriority() < allTasks[minIndex]->getPriority())
+                // cout << "in inner for loop j = " << j << endl;
+                if (allTasks[j]->getPriority() > allTasks[j + 1]->getPriority())
                 {
-                    minIndex = j;
+                    MainTask *temp = allTasks[j];
+                    allTasks[j] = allTasks[j + 1];
+                    allTasks[j + 1] = temp;
                 }
             }
-
-            if (minIndex != i)
-            {
-                MainTask *temp = allTasks[i];
-                allTasks[i] = allTasks[minIndex];
-                allTasks[minIndex] = temp;
-            }
         }
+        // cout << "out of sort loops"<< endl;
+
+        allTasks[static_cast<int>(allTasks.size()) - 1 - 1]->sort();
         return 0;
     }
     else if (userChoice == 2)
     { // sort by deadline
-        for (unsigned int i = 0; i < allTasks.size() - 1; i++)
-        {
-            unsigned int minIndex = i;
-            for (unsigned int j = i + 1; j < allTasks.size(); j++)
-            {
-                if (allTasks[j]->getDdl() < allTasks[minIndex]->getDdl())
-                {
-                    minIndex = j;
-                }
-            }
 
-            if (minIndex != i)
+        for (int i = 0; i < static_cast<int>(allTasks.size()) - 1; i++)
+        {
+            for (int j = 0; j < static_cast<int>(allTasks.size()) - i - 1; j++)
             {
-                MainTask *temp = allTasks[i];
-                allTasks[i] = allTasks[minIndex];
-                allTasks[minIndex] = temp;
+                if (allTasks[j]->getDdl() > allTasks[j + 1]->getDdl())
+                {
+                    MainTask *temp = allTasks[j];
+                    allTasks[j] = allTasks[j + 1];
+                    allTasks[j + 1] = temp;
+                }
             }
         }
         return 0;
     }
     else
     {
+
         return -1;
     }
 }
@@ -157,7 +155,6 @@ void *TaskList::_updateDdlHelper(void *arg)
                 {
                     if (mt->getDdl() < time_current) // ddl already passed
                     {
-                        // std::cout << " < time_current" << i << std::endl;
                         mt->editDdlPassed(true);
                         time_t oldDeadLine = mt->getDdl();
                         mt->editDdl(_addRecurring(oldDeadLine, mt->getRecurringEventTime()));
